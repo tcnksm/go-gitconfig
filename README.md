@@ -1,7 +1,7 @@
-go-gitconfig [![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](https://github.com/tcnksm/go-gitconfig/blob/master/LICENCE)
+go-gitconfig [![GoDoc](https://godoc.org/github.com/tcnksm/go-gitconfig?status.svg)](https://godoc.org/github.com/tcnksm/go-gitconfig) [![Build Status](https://drone.io/github.com/tcnksm/go-gitconfig/status.png)](https://drone.io/github.com/tcnksm/go-gitconfig/latest) [![Coverage Status](https://coveralls.io/repos/tcnksm/go-gitconfig/badge.png)](https://coveralls.io/r/tcnksm/go-gitconfig) [![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](https://github.com/tcnksm/go-gitconfig/blob/master/LICENCE)
 ====
 
-Use `~/.gitconfig` values in Golang.
+Use `gitconfig` values in Golang.
 
 ## Usage
 
