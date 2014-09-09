@@ -21,9 +21,10 @@ package gitconfig
 import (
 	"bytes"
 	"fmt"
-	//"io/ioutil"
+	"io/ioutil"
 	"os/exec"
 	"strings"
+	"syscall"
 )
 
 // Global extract configuration value from `$HOME/.gitconfig` file or `$GIT_CONFIG`.
@@ -39,13 +40,17 @@ func Local(key string) (string, error) {
 func execGitConfig(args ...string) (string, error) {
 	gitArgs := append([]string{"config", "--get", "--null"}, args...)
 	var stdout bytes.Buffer
-	var stderr bytes.Buffer
 	cmd := exec.Command("git", gitArgs...)
 	cmd.Stdout = &stdout
-	cmd.Stderr = &stderr
+	cmd.Stderr = ioutil.Discard
 
-	if err := cmd.Run(); err != nil {
-		fmt.Println(stderr.String())
+	err := cmd.Run()
+	if exitError, ok := err.(*exec.ExitError); ok {
+		if waitStatus, ok := exitError.Sys().(syscall.WaitStatus); ok {
+			if waitStatus.ExitStatus() == 1 {
+				return "", fmt.Errorf("the key was not found")
+			}
+		}
 		return "", err
 	}
 
