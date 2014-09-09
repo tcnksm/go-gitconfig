@@ -49,6 +49,50 @@ func TestLocal(t *testing.T) {
 	Expect(nothing).To(Equal(""))
 }
 
+func TestUsername(t *testing.T) {
+	RegisterTestingT(t)
+
+	reset := withGlobalGitConfigFile(`
+[user]
+    name  = taichi
+    email = taichi@example.com
+`)
+	defer reset()
+
+	var err error
+	username, err := Username()
+	Expect(err).NotTo(HaveOccurred())
+	Expect(username).To(Equal("taichi"))
+}
+
+func TestEmail(t *testing.T) {
+	RegisterTestingT(t)
+
+	reset := withGlobalGitConfigFile(`
+[user]
+    name  = taichi
+    email = taichi@example.com
+`)
+	defer reset()
+
+	var err error
+	username, err := Email()
+	Expect(err).NotTo(HaveOccurred())
+	Expect(username).To(Equal("taichi@example.com"))
+}
+
+func TestOriginURL(t *testing.T) {
+	RegisterTestingT(t)
+
+	reset := withLocalGitConfigFile("remote.origin.url", "git@github.com:taichi/gitconfig.git")
+	defer reset()
+
+	var err error
+	url, err := OriginURL()
+	Expect(err).NotTo(HaveOccurred())
+	Expect(url).To(Equal("git@github.com:taichi/gitconfig.git"))
+}
+
 func withGlobalGitConfigFile(content string) func() {
 	tmpdir, err := ioutil.TempDir("", "go-gitconfig-test")
 	if err != nil {
