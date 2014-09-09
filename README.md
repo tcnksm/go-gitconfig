@@ -5,19 +5,35 @@ Use `gitconfig` values in Golang.
 
 ## Usage
 
-If you want to use git user name:
+If you want to use git user name defined in `~/.gitconfig`: 
 
 ```go
-username, err := gitconfig.Global("user.name")
+username, err := gitconfig.Username()
 ```
 
-Or, if you want to extract origin url of current project:
+Or git user email defined in `~/.gitconfig`: 
 
 ```go
-url, err := gitconfig.Local("remote.origin.url")
+email, err := gitconfig.Email()
 ```
 
-See more document at [https://godoc.org/github.com/tcnksm/go-gitconfig](https://godoc.org/github.com/tcnksm/go-gitconfig). 
+Or, if you want to extract origin url of current project (from `.git/config`):
+
+```go
+url, err := gitconfig.OriginURL()
+```
+
+You can also extract value by key:
+
+```go
+editor, err := gitconfig.Global("core.editor")
+```
+
+```go
+remote, err := gitconfig.Local("branch.master.remote")
+```
+
+See more details in document at [https://godoc.org/github.com/tcnksm/go-gitconfig](https://godoc.org/github.com/tcnksm/go-gitconfig). 
 
 ## Install
 
@@ -26,6 +42,13 @@ To install, use `go get`:
 ```bash
 $ go get -d github.com/tcnksm/go-gitconfig
 ```
+
+## VS.
+
+- [speedata/gogit](https://github.com/speedata/gogit)
+- [libgit2/git2go](https://github.com/libgit2/git2go)
+
+These packages have many features to use git from golang. `go-gitconfig` is very simple alternative and focus to extract information from gitconfig. `go-gitconfig` is used in [tcnksm/ghr](https://github.com/tcnksm/ghr). 
 
 ## Contribution
 
