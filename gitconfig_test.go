@@ -30,6 +30,7 @@ func TestGlobal(t *testing.T) {
 
 	nothing, err := Local("nothing.return")
 	Expect(err).To(HaveOccurred())
+	Expect(err == ErrNotFound).To(BeTrue(), "expect ErrNotFound, but got %V", err)
 	Expect(nothing).To(Equal(""))
 }
 
@@ -46,6 +47,7 @@ func TestLocal(t *testing.T) {
 
 	nothing, err := Local("nothing.return")
 	Expect(err).To(HaveOccurred())
+	Expect(err == ErrNotFound).To(BeTrue(), "expect ErrNotFound, but got %V", err)
 	Expect(nothing).To(Equal(""))
 }
 

@@ -20,12 +20,14 @@ package gitconfig
 
 import (
 	"bytes"
-	"fmt"
+	"errors"
 	"io/ioutil"
 	"os/exec"
 	"strings"
 	"syscall"
 )
+
+var ErrNotFound = errors.New("the key was not found")
 
 // Global extracts configuration value from `$HOME/.gitconfig` file or `$GIT_CONFIG`.
 func Global(key string) (string, error) {
@@ -66,7 +68,7 @@ func execGitConfig(args ...string) (string, error) {
 	if exitError, ok := err.(*exec.ExitError); ok {
 		if waitStatus, ok := exitError.Sys().(syscall.WaitStatus); ok {
 			if waitStatus.ExitStatus() == 1 {
-				return "", fmt.Errorf("the key was not found")
+				return "", ErrNotFound
 			}
 		}
 		return "", err
