@@ -95,6 +95,32 @@ func TestOriginURL(t *testing.T) {
 	Expect(url).To(Equal("git@github.com:taichi/gitconfig.git"))
 }
 
+func TestRepository(t *testing.T) {
+	RegisterTestingT(t)
+
+	reset := withLocalGitConfigFile("remote.origin.url", "git@github.com:taichi/gitconfig.git")
+	defer reset()
+
+	var err error
+	repository, err := Repository()
+
+	Expect(err).NotTo(HaveOccurred())
+	Expect(repository).To(Equal("gitconfig"))
+}
+
+func TestRetrieveRepoName(t *testing.T) {
+	RegisterTestingT(t)
+
+	repo := retrieveRepoName("https://github.com/tcnksm/ghr.git")
+	Expect(repo).To(Equal("ghr"))
+
+	repo = retrieveRepoName("https://github.com/tcnksm/ghr")
+	Expect(repo).To(Equal("ghr"))
+
+	repo = retrieveRepoName("git@github.com:taichi/gitconfig.git")
+	Expect(repo).To(Equal("gitconfig"))
+}
+
 func withGlobalGitConfigFile(content string) func() {
 	tmpdir, err := ioutil.TempDir("", "go-gitconfig-test")
 	if err != nil {

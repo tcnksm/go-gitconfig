@@ -23,6 +23,7 @@ import (
 	"errors"
 	"io/ioutil"
 	"os/exec"
+	"regexp"
 	"strings"
 	"syscall"
 )
@@ -57,6 +58,17 @@ func OriginURL() (string, error) {
 	return Local("remote.origin.url")
 }
 
+// Repository extract repository name of current project repository.
+func Repository() (string, error) {
+	url, err := OriginURL()
+	if err != nil {
+		return "", err
+	}
+
+	repo := retrieveRepoName(url)
+	return repo, nil
+}
+
 func execGitConfig(args ...string) (string, error) {
 	gitArgs := append([]string{"config", "--get", "--null"}, args...)
 	var stdout bytes.Buffer
@@ -75,4 +87,11 @@ func execGitConfig(args ...string) (string, error) {
 	}
 
 	return strings.TrimRight(stdout.String(), "\000"), nil
+}
+
+var RepoNameRegexp = regexp.MustCompile(`.+/([^/]+)(\.git)?$`)
+
+func retrieveRepoName(url string) string {
+	matched := RepoNameRegexp.FindStringSubmatch(url)
+	return strings.TrimSuffix(matched[1], ".git")
 }
