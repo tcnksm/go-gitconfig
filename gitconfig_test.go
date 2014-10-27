@@ -116,14 +116,14 @@ func TestGithubToken(t *testing.T) {
 
 	reset := withGlobalGitConfigFile(`
 [github]
-    token  = aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+    token  = 16c999e8c71134401a78d4d46435517b2271d6ac
 `)
 	defer reset()
 
 	var err error
 	token, err := GithubToken()
 	Expect(err).NotTo(HaveOccurred())
-	Expect(token).To(Equal("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"))
+	Expect(token).To(Equal("16c999e8c71134401a78d4d46435517b2271d6ac"))
 }
 
 func TestOriginURL(t *testing.T) {
