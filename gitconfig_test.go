@@ -34,6 +34,34 @@ func TestGlobal(t *testing.T) {
 	Expect(nothing).To(Equal(""))
 }
 
+func TestEntire(t *testing.T) {
+	RegisterTestingT(t)
+
+	reset := withIncludeGitConfigFile(`
+[include]
+    path = ~/.gitconfig.local
+	`, `
+[user]
+    name  = deeeet
+    email = deeeet@example.com
+	`)
+	defer reset()
+
+	var err error
+	username, err := Entire("user.name")
+	Expect(err).NotTo(HaveOccurred())
+	Expect(username).To(Equal("deeeet"))
+
+	email, err := Entire("user.email")
+	Expect(err).NotTo(HaveOccurred())
+	Expect(email).To(Equal("deeeet@example.com"))
+
+	nothing, err := Local("nothing.return")
+	Expect(err).To(HaveOccurred())
+	Expect(err == ErrNotFound).To(BeTrue(), "expect ErrNotFound, but got %V", err)
+	Expect(nothing).To(Equal(""))
+}
+
 func TestLocal(t *testing.T) {
 	RegisterTestingT(t)
 
@@ -81,6 +109,21 @@ func TestEmail(t *testing.T) {
 	username, err := Email()
 	Expect(err).NotTo(HaveOccurred())
 	Expect(username).To(Equal("taichi@example.com"))
+}
+
+func TestGithubToken(t *testing.T) {
+	RegisterTestingT(t)
+
+	reset := withGlobalGitConfigFile(`
+[github]
+    token  = 16c999e8c71134401a78d4d46435517b2271d6ac
+`)
+	defer reset()
+
+	var err error
+	token, err := GithubToken()
+	Expect(err).NotTo(HaveOccurred())
+	Expect(token).To(Equal("16c999e8c71134401a78d4d46435517b2271d6ac"))
 }
 
 func TestOriginURL(t *testing.T) {
@@ -132,6 +175,35 @@ func withGlobalGitConfigFile(content string) func() {
 	ioutil.WriteFile(
 		tmpGitConfigFile,
 		[]byte(content),
+		0777,
+	)
+
+	prevGitConfigEnv := os.Getenv("HOME")
+	os.Setenv("HOME", tmpdir)
+
+	return func() {
+		os.Setenv("HOME", prevGitConfigEnv)
+	}
+}
+
+func withIncludeGitConfigFile(content string, include_content string) func() {
+	tmpdir, err := ioutil.TempDir("", "go-gitconfig-test")
+	if err != nil {
+		panic(err)
+	}
+
+	tmpGitConfigFile := filepath.Join(tmpdir, ".gitconfig")
+
+	ioutil.WriteFile(
+		tmpGitConfigFile,
+		[]byte(content),
+		0777,
+	)
+
+	tmpGitIncludeConfigFile := filepath.Join(tmpdir, ".gitconfig.local")
+	ioutil.WriteFile(
+		tmpGitIncludeConfigFile,
+		[]byte(include_content),
 		0777,
 	)
 

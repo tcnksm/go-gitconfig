@@ -30,6 +30,12 @@ import (
 
 var ErrNotFound = errors.New("the key was not found")
 
+// Entire extracts configuration value from `$HOME/.gitconfig` file ,
+// `$GIT_CONFIG`, /etc/gitconfig or include.path files.
+func Entire(key string) (string, error) {
+	return execGitConfig(key)
+}
+
 // Global extracts configuration value from `$HOME/.gitconfig` file or `$GIT_CONFIG`.
 func Global(key string) (string, error) {
 	return execGitConfig("--global", key)
@@ -40,16 +46,16 @@ func Local(key string) (string, error) {
 	return execGitConfig("--local", key)
 }
 
-// Username extracts git user name from `$HOME/.gitconfig` file or `$GIT_CONFIG`.
-// This is same as Global("user.name")
+// Username extracts git user name from `Entire gitconfig`.
+// This is same as Entire("user.name")
 func Username() (string, error) {
-	return Global("user.name")
+	return Entire("user.name")
 }
 
 // Email extracts git user email from `$HOME/.gitconfig` file or `$GIT_CONFIG`.
 // This is same as Global("user.email")
 func Email() (string, error) {
-	return Global("user.email")
+	return Entire("user.email")
 }
 
 // OriginURL extract remote origin url from current project repository.
@@ -67,6 +73,12 @@ func Repository() (string, error) {
 
 	repo := retrieveRepoName(url)
 	return repo, nil
+}
+
+// Github extracts github token from `Entire gitconfig`.
+// This is same as Entire("github.token")
+func GithubToken() (string, error) {
+	return Entire("github.token")
 }
 
 func execGitConfig(args ...string) (string, error) {
