@@ -111,6 +111,21 @@ func TestEmail(t *testing.T) {
 	Expect(username).To(Equal("taichi@example.com"))
 }
 
+func TestGithubToken(t *testing.T) {
+	RegisterTestingT(t)
+
+	reset := withGlobalGitConfigFile(`
+[github]
+    token  = aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+`)
+	defer reset()
+
+	var err error
+	token, err := GithubToken()
+	Expect(err).NotTo(HaveOccurred())
+	Expect(token).To(Equal("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"))
+}
+
 func TestOriginURL(t *testing.T) {
 	RegisterTestingT(t)
 

@@ -75,6 +75,12 @@ func Repository() (string, error) {
 	return repo, nil
 }
 
+// Github extracts github token from `All gitconfig`.
+// This is same as All("github.token")
+func GithubToken() (string, error) {
+	return All("github.token")
+}
+
 func execGitConfig(args ...string) (string, error) {
 	gitArgs := append([]string{"config", "--get", "--null"}, args...)
 	var stdout bytes.Buffer
