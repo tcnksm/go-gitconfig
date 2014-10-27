@@ -34,7 +34,7 @@ func TestGlobal(t *testing.T) {
 	Expect(nothing).To(Equal(""))
 }
 
-func TestAll(t *testing.T) {
+func TestEntire(t *testing.T) {
 	RegisterTestingT(t)
 
 	reset := withIncludeGitConfigFile(`
@@ -48,11 +48,11 @@ func TestAll(t *testing.T) {
 	defer reset()
 
 	var err error
-	username, err := All("user.name")
+	username, err := Entire("user.name")
 	Expect(err).NotTo(HaveOccurred())
 	Expect(username).To(Equal("deeeet"))
 
-	email, err := All("user.email")
+	email, err := Entire("user.email")
 	Expect(err).NotTo(HaveOccurred())
 	Expect(email).To(Equal("deeeet@example.com"))
 
