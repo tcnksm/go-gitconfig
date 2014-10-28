@@ -29,33 +29,20 @@ func withGlobalGitConfigFile(content string) func() {
 	}
 }
 
-func withIncludeGitConfigFile(content string, include_content string) func() {
+func includeGitConfigFile(content string) string {
 	tmpdir, err := ioutil.TempDir("", "go-gitconfig-test")
 	if err != nil {
 		panic(err)
 	}
 
-	tmpGitConfigFile := filepath.Join(tmpdir, ".gitconfig")
-
+	tmpGitIncludeConfigFile := filepath.Join(tmpdir, ".gitconfig.local")
 	ioutil.WriteFile(
-		tmpGitConfigFile,
+		tmpGitIncludeConfigFile,
 		[]byte(content),
 		0777,
 	)
 
-	tmpGitIncludeConfigFile := filepath.Join(tmpdir, ".gitconfig.local")
-	ioutil.WriteFile(
-		tmpGitIncludeConfigFile,
-		[]byte(include_content),
-		0777,
-	)
-
-	prevGitConfigEnv := os.Getenv("HOME")
-	os.Setenv("HOME", tmpdir)
-
-	return func() {
-		os.Setenv("HOME", prevGitConfigEnv)
-	}
+	return tmpGitIncludeConfigFile
 }
 
 func withLocalGitConfigFile(key string, value string) func() {

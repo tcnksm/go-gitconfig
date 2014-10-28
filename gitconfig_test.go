@@ -1,6 +1,7 @@
 package gitconfig
 
 import (
+	"fmt"
 	. "github.com/onsi/gomega"
 	"testing"
 )
@@ -33,14 +34,20 @@ func TestGlobal(t *testing.T) {
 func TestEntire(t *testing.T) {
 	RegisterTestingT(t)
 
-	reset := withIncludeGitConfigFile(`
-[include]
-    path = ~/.gitconfig.local
-	`, `
+	includeFilePath := includeGitConfigFile(`
 [user]
     name  = deeeet
     email = deeeet@example.com
 	`)
+
+	content := fmt.Sprintf(`
+[include]
+    path = %s
+`, includeFilePath)
+
+	fmt.Println(content)
+
+	reset := withGlobalGitConfigFile(content)
 	defer reset()
 
 	var err error
