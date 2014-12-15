@@ -1,10 +1,14 @@
 go-gitconfig 
 ====
 
+[![GitHub release](http://img.shields.io/github/release/tcnksm/go-gitconfig.svg?style=flat-square)][release]
+[![Wercker](http://img.shields.io/wercker/ci/544ee33aea87f6374f001483.svg?style=flat-square)][wercker]
 [![Coveralls](http://img.shields.io/coveralls/tcnksm/go-gitconfig.svg?style=flat-square)][coveralls]
 [![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)][license]
 [![Go Documentation](http://img.shields.io/badge/go-documentation-blue.svg?style=flat-square)][godocs]
 
+[release]: https://github.com/tcnksm/go-gitconfig/releases
+[wercker]: https://app.wercker.com/project/bykey/89c5a6e50a0daceec971ff5ce210164a
 [coveralls]: https://coveralls.io/r/tcnksm/go-gitconfig
 [license]: https://github.com/tcnksm/go-gitconfig/blob/master/LICENSE
 [godocs]: http://godoc.org/github.com/tcnksm/go-gitconfig
