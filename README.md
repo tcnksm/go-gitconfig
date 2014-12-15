@@ -69,10 +69,6 @@ These packages have many features to use git from golang. `go-gitconfig` is very
 1. Run `gofmt -s`
 1. Create new Pull Request
 
-## LICENCE
-
-[![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](https://github.com/tcnksm/go-gitconfig/blob/master/LICENCE)
-
 ## Author
 
 [tcnksm](https://github.com/tcnksm)
