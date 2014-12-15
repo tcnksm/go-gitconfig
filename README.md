@@ -1,5 +1,14 @@
-go-gitconfig [![GoDoc](https://godoc.org/github.com/tcnksm/go-gitconfig?status.svg)](https://godoc.org/github.com/tcnksm/go-gitconfig) [![wercker status](https://app.wercker.com/status/89c5a6e50a0daceec971ff5ce210164a/s "wercker status")](https://app.wercker.com/project/bykey/89c5a6e50a0daceec971ff5ce210164a) [![Coverage Status](http://coveralls.io/repos/tcnksm/go-gitconfig/badge.png)](https://coveralls.io/r/tcnksm/go-gitconfig)
+go-gitconfig 
 ====
+
+[![Coveralls](http://img.shields.io/coveralls/tcnksm/go-gitconfig.svg?style=flat-square)][coveralls]
+[![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)][license]
+[![Go Documentation](http://img.shields.io/badge/go-documentation-blue.svg?style=flat-square)][godocs]
+
+[coveralls]: https://coveralls.io/r/tcnksm/go-gitconfig
+[license]: https://github.com/tcnksm/go-gitconfig/blob/master/LICENSE
+[godocs]: http://godoc.org/github.com/tcnksm/go-gitconfig
+
 
 Use `gitconfig` values in Golang.
 
