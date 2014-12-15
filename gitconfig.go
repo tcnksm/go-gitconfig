@@ -20,15 +20,13 @@ package gitconfig
 
 import (
 	"bytes"
-	"errors"
+	"fmt"
 	"io/ioutil"
 	"os/exec"
 	"regexp"
 	"strings"
 	"syscall"
 )
-
-var ErrNotFound = errors.New("the key was not found")
 
 // Entire extracts configuration value from `$HOME/.gitconfig` file ,
 // `$GIT_CONFIG`, /etc/gitconfig or include.path files.
@@ -92,7 +90,7 @@ func execGitConfig(args ...string) (string, error) {
 	if exitError, ok := err.(*exec.ExitError); ok {
 		if waitStatus, ok := exitError.Sys().(syscall.WaitStatus); ok {
 			if waitStatus.ExitStatus() == 1 {
-				return "", ErrNotFound
+				return "", fmt.Errorf("the key `%s` is not found", args[len(args)-1])
 			}
 		}
 		return "", err

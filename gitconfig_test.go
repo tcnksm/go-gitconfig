@@ -27,7 +27,6 @@ func TestGlobal(t *testing.T) {
 
 	nothing, err := Local("nothing.return")
 	Expect(err).To(HaveOccurred())
-	Expect(err == ErrNotFound).To(BeTrue(), "expect ErrNotFound, but got %V", err)
 	Expect(nothing).To(Equal(""))
 }
 
@@ -45,8 +44,6 @@ func TestEntire(t *testing.T) {
     path = %s
 `, includeFilePath)
 
-	fmt.Println(content)
-
 	reset := withGlobalGitConfigFile(content)
 	defer reset()
 
@@ -61,7 +58,6 @@ func TestEntire(t *testing.T) {
 
 	nothing, err := Local("nothing.return")
 	Expect(err).To(HaveOccurred())
-	Expect(err == ErrNotFound).To(BeTrue(), "expect ErrNotFound, but got %V", err)
 	Expect(nothing).To(Equal(""))
 }
 
@@ -78,7 +74,7 @@ func TestLocal(t *testing.T) {
 
 	nothing, err := Local("nothing.return")
 	Expect(err).To(HaveOccurred())
-	Expect(err == ErrNotFound).To(BeTrue(), "expect ErrNotFound, but got %V", err)
+	Expect(err.Error()).To(Equal("the key `nothing.return` is not found"))
 	Expect(nothing).To(Equal(""))
 }
 
