@@ -14,7 +14,13 @@ go-gitconfig
 [godocs]: http://godoc.org/github.com/tcnksm/go-gitconfig
 
 
-Use `gitconfig` values in Golang.
+`go-gitconfig` is a pacakge to use `gitconfig` values in Golang.
+
+Sometimes you want to extract username or its email address **implicitly** in your tool.
+Now most of developer use `git`, so we can use its configuration variables. `go-gitconfig` is for that.
+
+`go-gitconfig` is very small, so it may not be included what you want to use.
+If you want to use more git specific variable, check [Other](##VS).
 
 ## Usage
 
