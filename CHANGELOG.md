@@ -1,3 +1,24 @@
+## 0.1.2 (2015-03-28)
+
+Add new functions
+
+### Added
+
+- `GithubUser()` extracts `github.user` ([**dstokes**](https://github.com/dstokes)), [#5](https://github.com/tcnksm/go-gitconfig/pull/5/commits)
+
+### Deprecated
+
+- Nothing
+
+### Removed
+
+- Nothing
+
+### Fixed
+
+- Nothing
+
+
 ## 0.1.1 (2014-10-28)
 
 Add new functions
