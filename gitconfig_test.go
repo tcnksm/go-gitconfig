@@ -13,6 +13,8 @@ func TestGlobal(t *testing.T) {
 [user]
     name  = deeeet
     email = deeeet@example.com
+[github]
+    user = ghdeeeet
 `)
 	defer reset()
 
@@ -24,6 +26,10 @@ func TestGlobal(t *testing.T) {
 	email, err := Global("user.email")
 	Expect(err).NotTo(HaveOccurred())
 	Expect(email).To(Equal("deeeet@example.com"))
+
+	githubuser, err := Global("github.user")
+	Expect(err).NotTo(HaveOccurred())
+	Expect(githubuser).To(Equal("ghdeeeet"))
 
 	nothing, err := Local("nothing.return")
 	Expect(err).To(HaveOccurred())

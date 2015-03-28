@@ -44,6 +44,12 @@ func Local(key string) (string, error) {
 	return execGitConfig("--local", key)
 }
 
+// GithubUser extracts github.user name from `Entire gitconfig`
+// This is same as Entire("github.user")
+func GithubUser() (string, error) {
+	return Entire("github.user")
+}
+
 // Username extracts git user name from `Entire gitconfig`.
 // This is same as Entire("user.name")
 func Username() (string, error) {
